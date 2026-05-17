@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MÖBEL · 家具生活</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:#FAF8F4}
+:root{
+  --cream:#FAF8F4;--warm:#F2EDE4;--warm2:#EAE0D2;
+  --text:#1C1A16;--muted:#7A7670;--border:#D3C8B8;
+  --accent:#8B6F47;--accent-light:#EAE0D2;--accent-dark:#5C4A30;
+  --green:#3B6D11;--green-bg:#EAF3DE;
+  --red-bg:#FCEBEB;--red:#A32D2D;
+}
+body{font-family:'DM Sans',sans-serif;color:var(--text)}
+
+.app{
+  max-width:430px;margin:0 auto;height:100dvh;
+  display:flex;flex-direction:column;
+  background:var(--cream);
+  position:relative;overflow:hidden;
+}
+
+/* ── NAV ── */
+nav{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 12px;
+  border-bottom:0.5px solid var(--border);
+  background:var(--cream);
+  z-index:10;
+}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;letter-spacing:-0.5px}
+.logo span{color:var(--accent)}
+.nav-icons{display:flex;gap:16px;align-items:center}
+.nav-icon-btn{background:none;border:none;font-size:22px;color:var(--text);cursor:pointer;position:relative}
+.cart-badge{
+  position:absolute;top:-4px;right:-6px;
+  background:var(--accent);color:#fff;
+  font-size:9px;font-family:'DM Sans',sans-serif;font-weight:500;
+  border-radius:10px;padding:1px 5px;min-width:16px;text-align:center;
+}
+
+/* ── SCROLL AREA ── */
+.scroll-area{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+}
+.scroll-area::-webkit-scrollbar{display:none}
+
+/* ── HERO ── */
+.hero{padding:20px 20px 0;display:grid;grid-template-columns:1fr 130px;gap:12px;align-items:center}
+.hero-text h1{font-family:'Playfair Display',serif;font-size:30px;line-height:1.15;font-weight:500;margin-bottom:10px}
+.hero-text h1 em{color:var(--accent);font-style:italic}
+.hero-text p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.hero-cta{display:flex;flex-direction:column;gap:8px}
+.btn-primary{
+  background:var(--text);color:var(--cream);border:none;
+  border-radius:22px;padding:10px 0;font-size:13px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  text-align:center;transition:opacity .2s;
+}
+.btn-primary:active{opacity:.7}
+.btn-outline{
+  background:transparent;color:var(--text);
+  border:0.5px solid var(--text);
+  border-radius:22px;padding:10px 0;font-size:13px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  text-align:center;transition:background .2s;
+}
+.btn-outline:active{background:var(--warm)}
+.hero-img{
+  background:var(--warm);border-radius:14px;
+  height:160px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-badge{
+  position:absolute;top:10px;right:8px;
+  background:var(--accent);color:#fff;
+  border-radius:10px;padding:3px 8px;font-size:10px;font-weight:500;
+}
+
+/* ── STATS ── */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin:16px 20px;
+  border:0.5px solid var(--border);border-radius:12px;overflow:hidden;
+}
+.stat{
+  padding:12px 8px;text-align:center;background:var(--cream);
+  border-right:0.5px solid var(--border);
+}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--accent)}
+.stat-label{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* ── SECTION HEADER ── */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.sec-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500}
+.see-all{font-size:12px;color:var(--accent);cursor:pointer}
+
+/* ── CATEGORIES ── */
+.section{padding:4px 20px 0}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.cats::-webkit-scrollbar{display:none}
+.cat-pill{
+  padding:7px 16px;border-radius:20px;font-size:12px;
+  border:0.5px solid var(--border);background:var(--cream);
+  cursor:pointer;white-space:nowrap;transition:all .15s;color:var(--muted);
+  flex-shrink:0;
+}
+.cat-pill.active{background:var(--text);color:var(--cream);border-color:var(--text)}
+
+/* ── PRODUCTS ── */
+.products-wrap{padding:16px 20px 0}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prod-card{
+  background:var(--cream);border:0.5px solid var(--border);
+  border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:transform .2s;
+  -webkit-transform:translateZ(0);
+}
+.prod-card:active{transform:scale(0.97)}
+.prod-thumb{
+  background:var(--warm);height:130px;
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.tag{position:absolute;top:7px;left:7px;font-size:9px;padding:3px 7px;border-radius:7px;font-weight:500}
+.tag-new{background:var(--green-bg);color:var(--green)}
+.tag-sale{background:var(--red-bg);color:var(--red)}
+.prod-info{padding:10px 10px 10px}
+.prod-name{font-size:12px;font-weight:500;margin-bottom:2px}
+.prod-sub{font-size:10px;color:var(--muted);margin-bottom:8px}
+.prod-footer{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-family:'Playfair Display',serif;font-size:14px;font-weight:500}
+.prod-price s{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-right:2px}
+.add-btn{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--text);border:none;color:var(--cream);
+  font-size:17px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+  flex-shrink:0;
+}
+.add-btn:active{background:var(--accent)}
+
+/* ── FEATURED ── */
+.featured{
+  margin:16px 20px;background:var(--warm);border-radius:14px;
+  padding:16px;display:grid;grid-template-columns:1fr 100px;gap:10px;align-items:center;
+}
+.feat-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:5px}
+.feat-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;line-height:1.2;margin-bottom:5px}
+.feat-desc{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.feat-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--accent);margin-bottom:10px}
+.feat-img{height:100px;display:flex;align-items:center;justify-content:center}
+
+/* ── REVIEWS ── */
+.reviews{padding:4px 20px 16px}
+.review-card{
+  background:var(--cream);border:0.5px solid var(--border);
+  border-radius:12px;padding:12px 14px;margin-bottom:8px;
+}
+.review-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--warm2);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:500;color:var(--accent);flex-shrink:0;
+}
+.reviewer-name{font-size:13px;font-weight:500}
+.stars{color:var(--accent);font-size:12px;margin-top:1px}
+.review-text{font-size:12px;color:var(--muted);line-height:1.6}
+.review-product{font-size:10px;color:var(--accent);margin-top:6px}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  flex-shrink:0;
+  background:var(--cream);border-top:0.5px solid var(--border);
+  display:flex;justify-content:space-around;
+  padding:10px 0;
+  padding-bottom:max(10px, env(safe-area-inset-bottom));
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;color:var(--muted);font-size:10px;transition:color .2s;
+  min-width:50px;
+}
+.bn-item.active{color:var(--text)}
+.bn-item i{font-size:22px}
+.bn-dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:90px;left:50%;
+  transform:translateX(-50%) translateY(10px);
+  background:rgba(28,26,22,0.92);color:#FAF8F4;
+  padding:10px 22px;border-radius:22px;font-size:13px;
+  opacity:0;transition:all .25s;pointer-events:none;z-index:999;
+  white-space:nowrap;backdrop-filter:blur(4px);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── PAGE SECTIONS (for nav switching) ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── SEARCH PAGE ── */
+.search-page{padding:16px 20px}
+.search-bar{
+  display:flex;align-items:center;gap:10px;
+  background:var(--warm);border-radius:12px;
+  padding:10px 14px;margin-bottom:16px;
+}
+.search-bar i{font-size:18px;color:var(--muted)}
+.search-bar input{
+  background:none;border:none;outline:none;
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--text);flex:1;
+}
+.search-bar input::placeholder{color:var(--muted)}
+.search-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.search-tag{
+  padding:5px 12px;border-radius:14px;font-size:12px;
+  background:var(--warm);color:var(--muted);cursor:pointer;
+  border:0.5px solid var(--border);
+}
+.search-tag:active{background:var(--warm2)}
+
+/* ── FAVORITES PAGE ── */
+.fav-page{padding:16px 20px}
+.fav-empty{text-align:center;padding:40px 0;color:var(--muted)}
+.fav-empty i{font-size:48px;display:block;margin-bottom:12px;opacity:.4}
+.fav-empty p{font-size:14px}
+
+/* ── PROFILE PAGE ── */
+.profile-page{padding:20px}
+.profile-header{
+  text-align:center;padding:16px 0 20px;
+  border-bottom:0.5px solid var(--border);margin-bottom:16px;
+}
+.profile-avatar{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--warm2);margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:22px;color:var(--accent);
+}
+.profile-name{font-size:16px;font-weight:500;margin-bottom:3px}
+.profile-sub{font-size:12px;color:var(--muted)}
+.menu-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 0;border-bottom:0.5px solid var(--border);cursor:pointer;
+}
+.menu-item-left{display:flex;align-items:center;gap:12px;font-size:14px}
+.menu-item-left i{font-size:18px;color:var(--muted)}
+.menu-item i.ti-chevron-right{font-size:16px;color:var(--border)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">MÖBEL<span>.</span></div>
+    <div class="nav-icons">
+      <button class="nav-icon-btn" onclick="showToast('搜索功能')"><i class="ti ti-search"></i></button>
+      <button class="nav-icon-btn" onclick="showToast('已加入 2 件')">
+        <i class="ti ti-shopping-bag"></i>
+        <span class="cart-badge" id="badge">2</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- SCROLL AREA -->
+  <div class="scroll-area" id="scroll-area">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-text">
+          <h1>为生活<br>注入<em>温度</em></h1>
+          <p>精选北欧原木工艺，让每一件家具都成为家的故事。</p>
+          <div class="hero-cta">
+            <button class="btn-primary" onclick="showToast('正在加载全部产品…')">浏览全部</button>
+            <button class="btn-outline" onclick="showToast('查看新品专区…')">新品上市</button>
+          </div>
+        </div>
+        <div class="hero-img">
+          <svg viewBox="0 0 130 110" fill="none" width="120">
+            <rect x="8" y="60" width="114" height="32" rx="8" fill="#C4A882"/>
+            <rect x="8" y="46" width="26" height="36" rx="6" fill="#B89468"/>
+            <rect x="96" y="46" width="26" height="36" rx="6" fill="#B89468"/>
+            <rect x="18" y="36" width="94" height="30" rx="8" fill="#D4B896"/>
+            <rect x="16" y="88" width="7" height="14" rx="2" fill="#8B6F47"/>
+            <rect x="107" y="88" width="7" height="14" rx="2" fill="#8B6F47"/>
+            <rect x="32" y="88" width="7" height="14" rx="2" fill="#8B6F47"/>
+            <rect x="91" y="88" width="7" height="14" rx="2" fill="#8B6F47"/>
+            <rect x="99" y="14" width="5" height="22" rx="2" fill="#8B6F47"/>
+            <ellipse cx="102" cy="11" rx="11" ry="13" fill="#639922" opacity=".8"/>
+            <ellipse cx="95" cy="16" rx="7" ry="9" fill="#3B6D11" opacity=".6"/>
+            <rect x="96" y="32" width="12" height="6" rx="2" fill="#5C4A30"/>
+          </svg>
+          <div class="hero-badge">春季上新</div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat"><div class="stat-num">2000+</div><div class="stat-label">精选产品</div></div>
+        <div class="stat"><div class="stat-num">98%</div><div class="stat-label">好评率</div></div>
+        <div class="stat"><div class="stat-num">15年</div><div class="stat-label">匠心工艺</div></div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="section">
+        <div class="sec-head">
+          <div class="sec-title">产品分类</div>
+          <span class="see-all" onclick="showToast('查看全部分类')">查看全部 →</span>
+        </div>
+        <div class="cats">
+          <div class="cat-pill active" onclick="filterCat(this,'全部')">全部</div>
+          <div class="cat-pill" onclick="filterCat(this,'沙发')">沙发</div>
+          <div class="cat-pill" onclick="filterCat(this,'餐桌')">餐桌</div>
+          <div class="cat-pill" onclick="filterCat(this,'床具')">床具</div>
+          <div class="cat-pill" onclick="filterCat(this,'储物')">储物</div>
+          <div class="cat-pill" onclick="filterCat(this,'灯具')">灯具</div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="products-wrap">
+        <div class="sec-head">
+          <div class="sec-title" id="prod-title">热门产品</div>
+          <span class="see-all" onclick="showToast('查看全部产品')">更多 →</span>
+        </div>
+        <div class="prod-grid">
+
+          <div class="prod-card">
+            <div class="prod-thumb">
+              <svg viewBox="0 0 90 80" fill="none" width="80">
+                <rect x="5" y="45" width="80" height="22" rx="5" fill="#C4A882"/>
+                <rect x="5" y="32" width="20" height="28" rx="4" fill="#B89468"/>
+                <rect x="65" y="32" width="20" height="28" rx="4" fill="#B89468"/>
+                <rect x="12" y="25" width="66" height="22" rx="5" fill="#D4B896"/>
+                <rect x="12" y="62" width="5" height="10" rx="1" fill="#8B6F47"/>
+                <rect x="73" y="62" width="5" height="10" rx="1" fill="#8B6F47"/>
+              </svg>
+              <div class="tag tag-new">新品</div>
+            </div>
+            <div class="prod-info">
+              <div class="prod-name">云朵双人沙发</div>
+              <div class="prod-sub">亚麻 · 橡木脚</div>
+              <div class="prod-footer">
+                <div class="prod-price">¥4,299</div>
+                <button class="add-btn" onclick="addCart('云朵双人沙发')">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="prod-card">
+            <div class="prod-thumb">
+              <svg viewBox="0 0 90 80" fill="none" width="80">
+                <rect x="15" y="38" width="60" height="30" rx="3" fill="#D4B896"/>
+                <rect x="15" y="63" width="6" height="12" rx="2" fill="#8B6F47"/>
+                <rect x="69" y="63" width="6" height="12" rx="2" fill="#8B6F47"/>
+                <rect x="22" y="20" width="46" height="22" rx="3" fill="#C4A882"/>
+                <rect x="43" y="12" width="6" height="10" rx="2" fill="#8B6F47"/>
+                <rect x="20" y="52" width="50" height="10" rx="2" fill="#B89468" opacity=".4"/>
+              </svg>
+              <div class="tag tag-sale">-20%</div>
+            </div>
+            <div class="prod-info">
+              <div class="prod-name">原木餐桌套装</div>
+              <div class="prod-sub">白橡木 · 4人位</div>
+              <div class="prod-footer">
+                <div class="prod-price"><s>¥6,800</s>¥5,440</div>
+                <button class="add-btn" onclick="addCart('原木餐桌套装')">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="prod-card">
+            <div class="prod-thumb">
+              <svg viewBox="0 0 90 80" fill="none" width="80">
+                <rect x="10" y="30" width="70" height="36" rx="4" fill="#D4B896"/>
+                <rect x="10" y="26" width="70" height="11" rx="4" fill="#C4A882"/>
+                <rect x="10" y="62" width="8" height="12" rx="2" fill="#8B6F47"/>
+                <rect x="72" y="62" width="8" height="12" rx="2" fill="#8B6F47"/>
+                <ellipse cx="62" cy="20" rx="9" ry="9" fill="#639922" opacity=".7"/>
+                <rect x="60" y="26" width="4" height="7" fill="#8B6F47"/>
+              </svg>
+            </div>
+            <div class="prod-info">
+              <div class="prod-name">北欧极简床架</div>
+              <div class="prod-sub">实木 · 1.8m</div>
+              <div class="prod-footer">
+                <div class="prod-price">¥3,199</div>
+                <button class="add-btn" onclick="addCart('北欧极简床架')">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="prod-card">
+            <div class="prod-thumb">
+              <svg viewBox="0 0 90 80" fill="none" width="80">
+                <rect x="20" y="12" width="50" height="60" rx="4" fill="#D4B896"/>
+                <rect x="20" y="34" width="50" height="2" fill="#B89468" opacity=".5"/>
+                <rect x="20" y="54" width="50" height="2" fill="#B89468" opacity=".5"/>
+                <rect x="41" y="31" width="8" height="6" rx="3" fill="#8B6F47"/>
+                <rect x="41" y="51" width="8" height="6" rx="3" fill="#8B6F47"/>
+                <rect x="16" y="12" width="6" height="60" rx="2" fill="#C4A882"/>
+                <rect x="68" y="12" width="6" height="60" rx="2" fill="#C4A882"/>
+              </svg>
+              <div class="tag tag-new">新品</div>
+            </div>
+            <div class="prod-info">
+              <div class="prod-name">三格书柜</div>
+              <div class="prod-sub">白蜡木 · 可定制</div>
+              <div class="prod-footer">
+                <div class="prod-price">¥2,799</div>
+                <button class="add-btn" onclick="addCart('三格书柜')">+</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FEATURED -->
+      <div class="featured">
+        <div>
+          <div class="feat-label">本月精选</div>
+          <div class="feat-title">匠心躺椅<br>限量发售</div>
+          <div class="feat-desc">手工编织藤面，柚木骨架，每一把都是独一无二的艺术品。</div>
+          <div class="feat-price">¥7,880</div>
+          <button class="btn-primary" style="width:100%;max-width:130px" onclick="addCart('匠心躺椅')">立即购买</button>
+        </div>
+        <div class="feat-img">
+          <svg viewBox="0 0 100 100" fill="none" width="90">
+            <path d="M20 70 Q10 50 25 35 Q40 20 60 30 Q75 38 78 55 Q82 72 65 78 Q45 86 20 70Z" fill="#C4A882"/>
+            <path d="M25 68 Q18 52 30 40 Q44 26 60 34 Q72 40 74 54 Q77 68 63 74 Q46 80 25 68Z" fill="#D4B896"/>
+            <rect x="30" y="72" width="6" height="18" rx="2" transform="rotate(-10 30 72)" fill="#8B6F47"/>
+            <rect x="62" y="76" width="6" height="16" rx="2" transform="rotate(10 62 76)" fill="#8B6F47"/>
+            <path d="M22 60 Q12 40 28 26" stroke="#B89468" stroke-width="8" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div class="reviews">
+        <div class="sec-head">
+          <div class="sec-title">用户评价</div>
+          <span class="see-all" onclick="showToast('查看全部评价')">更多 →</span>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="avatar">李M</div>
+            <div>
+              <div class="reviewer-name">李明辉</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="review-text">沙发质量非常好，坐感很舒适，布料摸起来很细腻。快递也很快，师傅上门安装非常专业。</div>
+          <div class="review-product">购买了：云朵双人沙发</div>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="avatar">王S</div>
+            <div>
+              <div class="reviewer-name">王思雨</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="review-text">木材的纹理很漂亮，和图片完全一致。整体风格简洁，和北欧风的家居非常搭，强烈推荐！</div>
+          <div class="review-product">购买了：原木餐桌套装</div>
+        </div>
+      </div>
+
+    </div><!-- /page-home -->
+
+    <!-- SEARCH PAGE -->
+    <div class="page" id="page-search">
+      <div class="search-page">
+        <div class="sec-title" style="margin-bottom:14px;font-family:'Playfair Display',serif">搜索</div>
+        <div class="search-bar">
+          <i class="ti ti-search"></i>
+          <input type="text" placeholder="搜索家具、风格、材质…" id="search-input">
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">热门搜索</div>
+        <div class="search-tag-row">
+          <div class="search-tag" onclick="setSearch('北欧沙发')">北欧沙发</div>
+          <div class="search-tag" onclick="setSearch('实木餐桌')">实木餐桌</div>
+          <div class="search-tag" onclick="setSearch('原木床架')">原木床架</div>
+          <div class="search-tag" onclick="setSearch('书柜定制')">书柜定制</div>
+          <div class="search-tag" onclick="setSearch('落地灯')">落地灯</div>
+          <div class="search-tag" onclick="setSearch('儿童桌椅')">儿童桌椅</div>
+        </div>
+        <div style="margin-top:20px;font-size:12px;color:var(--muted);margin-bottom:8px">最近浏览</div>
+        <div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;opacity:.5">暂无浏览记录</div>
+      </div>
+    </div>
+
+    <!-- FAVORITES PAGE -->
+    <div class="page" id="page-fav">
+      <div class="fav-page">
+        <div class="sec-title" style="margin-bottom:14px;font-family:'Playfair Display',serif">我的收藏</div>
+        <div class="fav-empty">
+          <i class="ti ti-heart"></i>
+          <p>还没有收藏任何商品</p>
+          <p style="font-size:12px;margin-top:6px;opacity:.6">浏览产品时点击心形图标收藏</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page" id="page-profile">
+      <div class="profile-page">
+        <div class="profile-header">
+          <div class="profile-avatar">王</div>
+          <div class="profile-name">王小明</div>
+          <div class="profile-sub">北京 · 会员 2年</div>
+        </div>
+        <div class="menu-item" onclick="showToast('我的订单')">
+          <div class="menu-item-left"><i class="ti ti-package"></i>我的订单</div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="menu-item" onclick="showToast('收货地址')">
+          <div class="menu-item-left"><i class="ti ti-map-pin"></i>收货地址</div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="menu-item" onclick="showToast('优惠券')">
+          <div class="menu-item-left"><i class="ti ti-ticket"></i>优惠券</div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="menu-item" onclick="showToast('客服中心')">
+          <div class="menu-item-left"><i class="ti ti-headset"></i>客服中心</div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="menu-item" onclick="showToast('设置')">
+          <div class="menu-item-left"><i class="ti ti-settings"></i>设置</div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll-area -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <div class="bn-item active" id="bn-home" onclick="switchPage('home')">
+      <i class="ti ti-home"></i><span>首页</span><div class="bn-dot"></div>
+    </div>
+    <div class="bn-item" id="bn-search" onclick="switchPage('search')">
+      <i class="ti ti-search"></i><span>搜索</span>
+    </div>
+    <div class="bn-item" id="bn-fav" onclick="switchPage('fav')">
+      <i class="ti ti-heart"></i><span>收藏</span>
+    </div>
+    <div class="bn-item" id="bn-profile" onclick="switchPage('profile')">
+      <i class="ti ti-user"></i><span>我的</span>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+var cartCount = 2;
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2000);
+}
+
+function addCart(name) {
+  cartCount++;
+  document.getElementById('badge').textContent = cartCount;
+  showToast('已加入购物车：' + name);
+}
+
+function filterCat(el, cat) {
+  document.querySelectorAll('.cat-pill').forEach(function(p){ p.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('prod-title').textContent = cat === '全部' ? '热门产品' : cat + ' 系列';
+}
+
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.bn-item').forEach(function(i){
+    i.classList.remove('active');
+    var d = i.querySelector('.bn-dot');
+    if(d) d.remove();
+  });
+  var bn = document.getElementById('bn-' + name);
+  bn.classList.add('active');
+  var dot = document.createElement('div');
+  dot.className = 'bn-dot';
+  bn.appendChild(dot);
+  document.getElementById('scroll-area').scrollTop = 0;
+  if(name === 'search') {
+    setTimeout(function(){ document.getElementById('search-input').focus(); }, 100);
+  }
+}
+
+function setSearch(text) {
+  document.getElementById('search-input').value = text;
+  showToast('搜索：' + text);
+}
+</script>
+</body>
+</html>
